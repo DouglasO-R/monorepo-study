@@ -9,7 +9,28 @@ on:
       # - 'packages/another-package/**'
 
 jobs:
-  test:
+  unit-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-build-node-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-node-modules
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Run unit test
+        run: echo "run unit test script"
+        
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,12 +41,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: test
-        run: yarn test
 
       - name: Deploy
         run: echo "Deployed"
