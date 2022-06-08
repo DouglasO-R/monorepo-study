@@ -9,7 +9,7 @@ on:
       # - 'packages/another-package/**'
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +20,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+
+      - name: Install dependencies
+        run: yarn install
 
       - name: test
         run: yarn test
