@@ -21,5 +21,8 @@ jobs:
         with:
           node-version: 12.x
 
+      - name: test
+        run: yarn test
+
       - name: Deploy
         run: echo "Deployed"
